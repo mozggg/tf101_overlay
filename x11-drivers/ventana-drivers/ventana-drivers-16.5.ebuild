@@ -32,11 +32,16 @@ src_install() {
 	ddir=usr/lib/xorg/modules/drivers
 	insinto /$ddir
 	newins $ddir/tegra_drv.abi$XORG_ABI.so tegra_drv.so
+
+	#conflicting mesa
+	rm usr/lib/libEGL*
+	rm usr/lib/libGLES*
+	#conflicting libjpeg
+	rm usr/lib/libjpeg*
+	#all others
 	insinto /usr/lib
-	doins usr/lib/libnvdc.so
-	doins usr/lib/libnvrm.so
-	doins usr/lib/libnvrm_graphics.so
-	doins usr/lib/libnvos.so
-	doins usr/lib/libnvddk_2d_v2.so
-	doins usr/lib/libardrv_dynamic.so
+	doins usr/lib/lib*
+
+	insinto /lib/firmware
+	doins lib/firmware/*.bin
 }
